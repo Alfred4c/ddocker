@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <table>
+        <tr>
+            <td>Image</td>
+            <td>Tag</td>
+            <td>Size</td>
+        </tr>
+        {% for image in list %}
+            <tr>
+            <td>{{ image.name }}</td>
+                <td>{{ image.tag }}</td>
+                <td>{{ image.size }}</td>
+                <td><button id="{{ image.id }}"  value='?image={{ image.name }}&tag={{ image.tag }}' onclick='save({{ image.id }})'>save</button></td>
+                <td> <button onclick="download({{ image.id }})">download</button> </td>
+            </tr>
+        {% endfor %}
+</table>
+
+</body>
+<script>
+let save=function (id)
+{
+    var btn=document.getElementById(id)
+    var val1=btn.value
+
+
+    var url="http://10.0.10.141:5004/save/"+val1
+    var httpRequest =new XMLHttpRequest();
+    httpRequest.open('GET',url,true)
+    httpRequest.send()
+    alert(httpRequest.status)
+}
+let download=function (id)
+{
+    var btn=document.getElementById(id)
+    var val1=btn.value
+    var url="http://10.0.10.141:5004/download/"+val1
+    window.open(url,'_blank')
+}
+
+</script>
+</html>
